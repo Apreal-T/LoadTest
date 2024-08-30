@@ -21,15 +21,20 @@ jobs:
         wget https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-5.5.tgz
         tar -xvzf apache-jmeter-5.5.tgz
         sudo mv apache-jmeter-5.5 /opt/apache-jmeter-5.5
-        export PATH=$PATH:/opt/apache-jmeter-5.5/bin
+        echo 'export PATH=$PATH:/opt/apache-jmeter-5.5/bin' >> ~/.bashrc
+        echo 'export PATH=$PATH:/opt/apache-jmeter-5.5/bin' >> ~/.profile
+        source ~/.bashrc
+        source ~/.profile
 
     - name: Verify JMeter Installation
+      shell: bash
       run: |
-        jmeter -v
+        /opt/apache-jmeter-5.5/bin/jmeter -v
 
     - name: Run JMeter Tests
+      shell: bash
       run: |
-        jmeter -n -t LoadTest/perfomance.jmx -l results.jtl
+        /opt/apache-jmeter-5.5/bin/jmeter -n -t LoadTest/perfomance.jmx -l results.jtl
 
     - name: Archive Test Results
       uses: actions/upload-artifact@v3
