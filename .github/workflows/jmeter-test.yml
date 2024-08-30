@@ -1,4 +1,4 @@
-name: JMeter CI
+name: Run JMeter Tests
 
 on:
   push:
@@ -14,29 +14,21 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
-
-    - name: Set up JDK 11
-      uses: actions/setup-java@v2
-      with:
-        java-version: '11'
-        distribution: 'temurin'  # Use 'temurin' for OpenJDK
+      uses: actions/checkout@v3
 
     - name: Install JMeter
       run: |
-        wget wget https://downloads.apache.org//jmeter/binaries/apache-jmeter-5.5.tgz
-        tar -xzf apache-jmeter-5.4.1.tgz
-        sudo mv apache-jmeter-5.4.1 /opt/jmeter
-        echo "/opt/jmeter/bin" >> $GITHUB_PATH
+        wget https://downloads.apache.org/jmeter/binaries/apache-jmeter-5.5.tgz
+        tar -xvzf apache-jmeter-5.5.tgz
+        export JMETER_HOME=$GITHUB_WORKSPACE/apache-jmeter-5.5
+        export PATH=$JMETER_HOME/bin:$PATH
 
-    - name: Run JMeter Test
+    - name: Run JMeter Tests
       run: |
-        cd /opt/jmeter/bin
-        ./jmeter -n -t LoadTest/perfomance.jmx-l results.jtl
-        
+        jmeter -n -t LoadTest/perfomance.jmx.jmx -l results.jtl
 
-    - name: Upload JMeter Results
-      uses: actions/upload-artifact@v2
+    - name: Archive Test Results
+      uses: actions/upload-artifact@v3
       with:
         name: jmeter-results
         path: results.jtl
