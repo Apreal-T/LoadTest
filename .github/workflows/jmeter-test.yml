@@ -18,14 +18,14 @@ jobs:
 
     - name: Install JMeter
       run: |
-        wget https://downloads.apache.org/jmeter/binaries/apache-jmeter-5.5.tgz
+        wget https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-5.5.tgz
         tar -xvzf apache-jmeter-5.5.tgz
         export JMETER_HOME=$GITHUB_WORKSPACE/apache-jmeter-5.5
         export PATH=$JMETER_HOME/bin:$PATH
 
     - name: Run JMeter Tests
       run: |
-        jmeter -n -t LoadTest/perfomance.jmx.jmx -l results.jtl
+        jmeter -n -t LoadTest/perfomance.jmx -l results.jtl
 
     - name: Archive Test Results
       uses: actions/upload-artifact@v3
