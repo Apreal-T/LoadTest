@@ -35,7 +35,7 @@ jobs:
       shell: bash
       run: |
         /opt/apache-jmeter-5.5/bin/jmeter -n -t perfomance.jmx -l results.jtl
-      working-directory: ./LoadTest
+      working-directory: LoadTest
 
     - name: Archive Test Results
       uses: actions/upload-artifact@v3
