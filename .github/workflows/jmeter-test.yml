@@ -20,8 +20,12 @@ jobs:
       run: |
         wget https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-5.5.tgz
         tar -xvzf apache-jmeter-5.5.tgz
-        export JMETER_HOME=$GITHUB_WORKSPACE/apache-jmeter-5.5
-        export PATH=$JMETER_HOME/bin:$PATH
+        sudo mv apache-jmeter-5.5 /opt/apache-jmeter-5.5
+        export PATH=$PATH:/opt/apache-jmeter-5.5/bin
+
+    - name: Verify JMeter Installation
+      run: |
+        jmeter -v
 
     - name: Run JMeter Tests
       run: |
