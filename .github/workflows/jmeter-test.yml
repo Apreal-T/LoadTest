@@ -20,6 +20,7 @@ jobs:
       uses: actions/setup-java@v2
       with:
         java-version: '11'
+        distribution: 'temurin'  # Use 'temurin' for OpenJDK
 
     - name: Install JMeter
       run: |
@@ -31,8 +32,8 @@ jobs:
     - name: Run JMeter Test
       run: |
         cd /opt/jmeter/bin
-        ./jmeter -n -t /path/to/your/test.jmx -l results.jtl
-        # Replace /path/to/your/test.jmx with the actual path to your JMX file
+        ./jmeter -n -t LoadTest/perfomance.jmx-l results.jtl
+        
 
     - name: Upload JMeter Results
       uses: actions/upload-artifact@v2
